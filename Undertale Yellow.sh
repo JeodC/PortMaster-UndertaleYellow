@@ -24,6 +24,12 @@ echo "Loading, please wait... (might take a while!)" > /dev/tty0
 
 # Variables
 GAMEDIR="/$directory/ports/utyellow"
+CUR_TTY="/dev/tty0"
+
+# Set current virtual screen
+if [ "$CFW_NAME" == "muOS" ]; then
+  /opt/muos/extra/muxlog & CUR_TTY="/tmp/muxlog_info"
+fi
 
 cd $GAMEDIR
 > "$GAMEDIR/log.txt" && exec > >(tee "$GAMEDIR/log.txt") 2>&1
@@ -33,22 +39,31 @@ $ESUDO chmod 777 "$GAMEDIR/lib/7za"
 
 # Run the installer file if it hasn't been run yet
 if [ ! -f "$GAMEDIR/installed" ]; then	
-    echo "Performing first-run setup..." > /dev/tty0
+    echo "Performing first-run setup..." > $CUR_TTY
 	# Redirect output to install.log only for the commands within the if condition
 	(
 		exec > >(tee -a "$GAMEDIR/install.log") 2>&1
+        # Purge unneeded files
+        rm -rf assets/*.ini assets/*.exe
 		# Rename data.win
-        echo "Moving the game file..." > /dev/tty0
+        echo "Moving the game file..." > $CUR_TTY
 		mv "./assets/data.win" "./game.droid"
 
 		# Create a new zip file game.apk from specified directories
-		echo "Zipping assets into apk..." > /dev/tty0
-		./lib/7za a -r "./game.apk" "./assets"
+		echo "Zipping assets into apk..." > $CUR_TTY
+		./libs/7za a -mx=0 -r "./game.apk" "./assets"
+        rm -rf "$GAMEDIR/assets"
 	
 		# Create 'installed' file to indicate successful installation
 		touch "$GAMEDIR/installed"
 	)
-    echo "Done! Loading game..." > /dev/tty0
+    if [ -f "utyellow.xdelta" ]; then
+    $controlfolder/xdelta3 -d -s "$GAMEDIR/game.droid" "$GAMEDIR/utyellow.xdelta" "$GAMEDIR/game2.droid"
+    rm -rf game.droid
+    rm -rf utyellow.xdelta
+    mv game2.droid game.droid
+fi
+    echo "Done! Loading game..." > $CUR_TTY
 fi
 
 # Exports
