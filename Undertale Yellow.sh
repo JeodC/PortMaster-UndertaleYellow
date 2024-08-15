@@ -49,11 +49,11 @@ install-apk() {
         PATCHFILE="patch-droid.xdelta"
         # Extract the APK, replace game.droid, and repack
         mkdir -p "$GAMEDIR/assets"
-        ./libs/7za x "yellow.apk" -o"$GAMEDIR/assets/"
+        ./utils/unzip "yellow.apk" -d "$GAMEDIR/assets/"
         mv "$GAMEDIR/assets/assets/game.droid" "$GAMEDIR/game.droid"
         apply_patch
         mv "$GAMEDIR/game.droid" "$GAMEDIR/assets/assets/game.droid"
-        ./libs/7za a -mx=0 -r "./yellow.apk" "./assets/*"
+        ./utils/zip -r -0 "yellow.apk" "assets"
         rm -rf "$GAMEDIR/assets"
         rm -rf game.apk
         mv yellow.apk game.apk
@@ -71,7 +71,7 @@ install-win() {
         mv "./assets/data.win" "./game.droid"
         # Create a new zip file game.apk from specified directories
         echo "Zipping assets into apk..." > $CUR_TTY
-        ./libs/7za a -mx=0 -r "./game.apk" "./assets"
+        ./utils/zip -r -0 "game.apk" "assets"
         rm -rf "$GAMEDIR/assets"
         apply_patch
     fi
