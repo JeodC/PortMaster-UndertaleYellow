@@ -37,7 +37,6 @@ cd $GAMEDIR
 > "$GAMEDIR/log.txt" && exec > >(tee "$GAMEDIR/log.txt") 2>&1
 
 $ESUDO chmod 777 "$GAMEDIR/gmloadernext"
-$ESUDO chmod 777 "$GAMEDIR/libs/7za"
 
 # Exports
 export LD_LIBRARY_PATH="$GAMEDIR/libs:$LD_LIBRARY_PATH"
@@ -94,6 +93,7 @@ fi
 
 # Assign gptokeyb and load the game
 $GPTOKEYB "gmloadernext" -c "control.gptk" &
+export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
 ./gmloadernext game.apk
 
 # Kill processes

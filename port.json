@@ -1,39 +1,26 @@
 {
   "version": 2,
-  "name": "portname.zip",
+  "name": "utyellow.zip",
   "items": [
-    "Portname.sh",
-    "portname/"
+    "Undertale Yellow.sh",
+    "utyellow/"
   ],
   "items_opt": [],
   "attr": {
-    "title": "Portname",
+    "title": "Undertale Yellow",
     "porter": [
-      "Yournamehere"
+      "Jeod"
     ],
-    "desc": "",
-    "inst": "",
+    "desc": "When a child named Clover sets out on a mission, they find themself deep within the Underground. In this foreign land, monsters lurk around every corner, but are they friend or foe?",
+    "inst": "Download the game from Gamejolt and add the contents to ports/utyellow/assets. Game is ready to play after a brief first-time setup.",
     "genres": [
-      "action",
-      "adventure",
-      "arcade",
-      "casino/card",
-      "fps",
-      "platformer",
-      "puzzle",
-      "racing",
-      "rhythm",
-      "rpg",
-      "simulation",
-      "sports",
-      "strategy",
-      "visual novel",
-      "other"
+      "rpg"
     ],
     "image": "screenshot.png",
     "rtr": false,
     "exp": false,
     "runtime": null,
-    "reqs": []
+    "reqs": [],
+	"arch": ["aarch64"]
   }
 }
